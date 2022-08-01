@@ -25,17 +25,18 @@ namespace KnockMeUp
         private void Form1_Load(object sender, EventArgs e)
         {
             // Load JSON data from file...
-
             string _fileName = "servers.json";
             string[] lines = File.ReadAllLines(_fileName);
             cmbServerList.Items.Clear();
             cmbServerList.Text = "Select Server...";
+            
             foreach (string line in lines)
             {
                 Server server = JsonSerializer.Deserialize<Server>(line);
                 serversList.Add(server);
 
             }
+            
             foreach (Server server in serversList)
             {
                 cmbServerList.Items.Add(server.Description);
@@ -141,6 +142,17 @@ namespace KnockMeUp
             txtPacket3Text.Text = serversList[cmbServerList.SelectedIndex].Packet3text.ToString();
             txtPacket4Text.Text = serversList[cmbServerList.SelectedIndex].Packet4text.ToString();
 
+
+        }
+
+        private void btnAddUpdate_Click(object sender, EventArgs e)
+        {
+            // Update selected server In the file, serversList list, and from cmbServerList
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            // Delete selected server from file, serversList list, and from cmbServerList
 
         }
     }

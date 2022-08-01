@@ -56,7 +56,6 @@
             this.btnKnock = new System.Windows.Forms.Button();
             this.btnAddUpdate = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // cmbServerList
@@ -294,6 +293,7 @@
             this.btnAddUpdate.TabIndex = 26;
             this.btnAddUpdate.Text = "Add/Update";
             this.btnAddUpdate.UseVisualStyleBackColor = true;
+            this.btnAddUpdate.Click += new System.EventHandler(this.btnAddUpdate_Click);
             // 
             // btnDelete
             // 
@@ -303,23 +303,13 @@
             this.btnDelete.TabIndex = 27;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(445, 249);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 28;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(532, 289);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnAddUpdate);
             this.Controls.Add(this.btnKnock);
@@ -386,6 +376,5 @@
         private Button btnKnock;
         private Button btnAddUpdate;
         private Button btnDelete;
-        private Button button1;
     }
 }
