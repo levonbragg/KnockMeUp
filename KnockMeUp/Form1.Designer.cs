@@ -281,7 +281,8 @@
             this.btnKnock.Size = new System.Drawing.Size(90, 23);
             this.btnKnock.TabIndex = 25;
             this.btnKnock.Text = "Knock";
-            this.btnKnock.UseVisualStyleBackColor = true;            
+            this.btnKnock.UseVisualStyleBackColor = true;
+            this.btnKnock.Click += new System.EventHandler(this.btnKnock_Click);
             // 
             // btnAddUpdate
             // 
@@ -301,7 +302,7 @@
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
             // 
-            // Main
+            // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -334,8 +335,9 @@
             this.Controls.Add(this.lblNameOrIP);
             this.Controls.Add(this.lblServer);
             this.Controls.Add(this.cmbServerList);
-            this.Name = "Main";
+            this.Name = "Form1";
             this.Text = "Main";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
