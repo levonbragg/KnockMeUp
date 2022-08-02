@@ -1,0 +1,23 @@
+﻿// create a new object for testing...
+
+            //Server server = new Server(
+            //    Guid.NewGuid().ToString(),
+            //    "172.31.251.254",
+            //    "Home F12",
+            //    1,
+            //    38617,
+            //    "Gd57xb1zNlQvedtUuP14qa3eWka618TjLhVvvTCW==",
+            //    1,
+            //    10994,
+            //    "Gd57xb1zNlQvedtUuP14qa3eWka618TjLhVvvTCW==",
+            //    1,
+            //    53571,
+            //    "Gd57xb1zNlQvedtUuP14qa3eWka618TjLhVvvTCW==",
+            //    1,
+            //    27589,
+            //    "Gd57xb1zNlQvedtUuP14qa3eWka618TjLhVvvTCW=="
+            //);
+
+
+
+

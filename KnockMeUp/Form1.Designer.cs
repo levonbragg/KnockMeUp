@@ -54,8 +54,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.btnKnock = new System.Windows.Forms.Button();
-            this.btnAddUpdate = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
+            this.txtID = new System.Windows.Forms.TextBox();
+            this.btnAdd = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // cmbServerList
@@ -277,7 +279,7 @@
             // 
             // btnKnock
             // 
-            this.btnKnock.Location = new System.Drawing.Point(122, 249);
+            this.btnKnock.Location = new System.Drawing.Point(60, 249);
             this.btnKnock.Name = "btnKnock";
             this.btnKnock.Size = new System.Drawing.Size(90, 23);
             this.btnKnock.TabIndex = 25;
@@ -285,19 +287,19 @@
             this.btnKnock.UseVisualStyleBackColor = true;
             this.btnKnock.Click += new System.EventHandler(this.btnKnock_Click);
             // 
-            // btnAddUpdate
+            // btnSave
             // 
-            this.btnAddUpdate.Location = new System.Drawing.Point(218, 249);
-            this.btnAddUpdate.Name = "btnAddUpdate";
-            this.btnAddUpdate.Size = new System.Drawing.Size(90, 23);
-            this.btnAddUpdate.TabIndex = 26;
-            this.btnAddUpdate.Text = "Add/Update";
-            this.btnAddUpdate.UseVisualStyleBackColor = true;
-            this.btnAddUpdate.Click += new System.EventHandler(this.btnAddUpdate_Click);
+            this.btnSave.Location = new System.Drawing.Point(276, 249);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(90, 23);
+            this.btnSave.TabIndex = 26;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(314, 249);
+            this.btnDelete.Location = new System.Drawing.Point(384, 249);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(90, 23);
             this.btnDelete.TabIndex = 27;
@@ -305,13 +307,33 @@
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
+            // txtID
+            // 
+            this.txtID.Location = new System.Drawing.Point(486, 7);
+            this.txtID.Name = "txtID";
+            this.txtID.Size = new System.Drawing.Size(34, 23);
+            this.txtID.TabIndex = 28;
+            this.txtID.Visible = false;
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.Location = new System.Drawing.Point(168, 249);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(90, 23);
+            this.btnAdd.TabIndex = 29;
+            this.btnAdd.Text = "Add";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(532, 289);
+            this.Controls.Add(this.btnAdd);
+            this.Controls.Add(this.txtID);
             this.Controls.Add(this.btnDelete);
-            this.Controls.Add(this.btnAddUpdate);
+            this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnKnock);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label2);
@@ -374,7 +396,9 @@
         private Label label2;
         private Label label7;
         private Button btnKnock;
-        private Button btnAddUpdate;
+        private Button btnSave;
         private Button btnDelete;
+        private TextBox txtID;
+        private Button btnAdd;
     }
 }

@@ -11,10 +11,11 @@ using System.Net.Sockets;
 using System.Text.Json;
 
 namespace KnockMeUp
-{
+{    
     public partial class Form1 : Form
     {
         List<Server> serversList = new List<Server>();
+        bool reload = false;
 
 
         public Form1()
@@ -24,49 +25,77 @@ namespace KnockMeUp
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // Load JSON data from file...
-            string _fileName = "servers.json";
-            string[] lines = File.ReadAllLines(_fileName);
+            LoadServerData();
+        }
+
+        private void LoadServerData()
+        {
             cmbServerList.Items.Clear();
             cmbServerList.Text = "Select Server...";
-            
-            foreach (string line in lines)
+            serversList.Clear();
+
+            // Load JSON data from file if there is one...
+            string _fileName = "servers.json";
+            try
             {
-                Server server = JsonSerializer.Deserialize<Server>(line);
-                serversList.Add(server);
+                string[] lines = File.ReadAllLines(_fileName);
+                foreach (string line in lines)
+                {
+                    Server server = JsonSerializer.Deserialize<Server>(line);
+                    serversList.Add(server);
+
+                }
+
+                foreach (Server server in serversList)
+                {
+                    cmbServerList.Items.Add(server.Description);
+                }
+            }
+            catch
+            {
 
             }
-            
-            foreach (Server server in serversList)
-            {
-                cmbServerList.Items.Add(server.Description);
-            }
 
+            // set display to first server.
+            cmbServerList.SelectedIndex = 0;
+
+            // File does not exist, so lets create one...
+            //File.WriteAllText(_fileName, string.Empty);
         }
 
         private void btnKnock_Click(object sender, EventArgs e)
         {
-            // create a new object for testing...
-
-            Server server = new Server(
-                Guid.NewGuid().ToString(),
-                "172.31.251.254",
-                "Home F12",
-                1,
-                38617,
-                "Gd57xb1zNlQvedtUuP14qa3eWka618TjLhVvvTCW==",
-                1,
-                10994,
-                "Gd57xb1zNlQvedtUuP14qa3eWka618TjLhVvvTCW==",
-                1,
-                53571,
-                "Gd57xb1zNlQvedtUuP14qa3eWka618TjLhVvvTCW==",
-                1,
-                27589,
-                "Gd57xb1zNlQvedtUuP14qa3eWka618TjLhVvvTCW=="
-            );
-
-            knock(server);
+            if (cmbServerList.SelectedIndex != -1)
+            {
+                Server server = new Server(
+                    serversList[cmbServerList.SelectedIndex].ID,
+                    serversList[cmbServerList.SelectedIndex].Host,
+                    serversList[cmbServerList.SelectedIndex].Description,
+                    serversList[cmbServerList.SelectedIndex].Packet1type,
+                    serversList[cmbServerList.SelectedIndex].Packet1port,
+                    serversList[cmbServerList.SelectedIndex].Packet1text,
+                    serversList[cmbServerList.SelectedIndex].Packet2type,
+                    serversList[cmbServerList.SelectedIndex].Packet2port,
+                    serversList[cmbServerList.SelectedIndex].Packet2text,
+                    serversList[cmbServerList.SelectedIndex].Packet3type,
+                    serversList[cmbServerList.SelectedIndex].Packet3port,
+                    serversList[cmbServerList.SelectedIndex].Packet3text,
+                    serversList[cmbServerList.SelectedIndex].Packet4type,
+                    serversList[cmbServerList.SelectedIndex].Packet4port,
+                    serversList[cmbServerList.SelectedIndex].Packet4text
+                    );
+                
+                if (server != null)
+                {
+                    knock(server);
+                }
+            }
+            else
+            {
+                MessageBox.Show(this,"Select Server First!","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+            }
+            
+            
 
         }
 
@@ -80,17 +109,122 @@ namespace KnockMeUp
             // send UDP test
             UdpClient udpClient = new UdpClient();
 
-            Byte[] sendBytes = Encoding.ASCII.GetBytes(server.Packet1text);
-            try
+            if(server.Packet1type !=0)
             {
-                udpClient.Send(sendBytes, sendBytes.Length, server.Host, server.Packet1port);
-            }
-            catch (Exception err)
-            {
-                //Console.WriteLine(e.ToString());
-                MessageBox.Show(err.Message);
-            }
+                
+                switch(server.Packet1type)
+                {
+                    case 1:
+                        Byte[] sendBytes = Encoding.ASCII.GetBytes(server.Packet1text);
+                        try
+                        {
+                            udpClient.Send(sendBytes, sendBytes.Length, server.Host, server.Packet1port);
+                        }
+                        catch (Exception err)
+                        {
+                            //Console.WriteLine(e.ToString());
+                            MessageBox.Show(err.Message);
+                        }
+                        break;
+                    
+                    case 2:
+                        // Send a TCP packet
+                        
+                        break;
+                                        
+                    default:
 
+                        break;
+                        
+                }
+            }
+            if (server.Packet2type != 0)
+            {
+
+                switch (server.Packet2type)
+                {
+                    case 1:
+                        Byte[] sendBytes = Encoding.ASCII.GetBytes(server.Packet2text);
+                        try
+                        {
+                            udpClient.Send(sendBytes, sendBytes.Length, server.Host, server.Packet2port);
+                        }
+                        catch (Exception err)
+                        {
+                            //Console.WriteLine(e.ToString());
+                            MessageBox.Show(err.Message);
+                        }
+                        break;
+
+                    case 2:
+                        // Send a TCP packet
+
+                        break;
+
+                    default:
+
+                        break;
+
+                }
+            }
+            if (server.Packet3type != 0)
+            {
+
+                switch (server.Packet3type)
+                {
+                    case 1:
+                        Byte[] sendBytes = Encoding.ASCII.GetBytes(server.Packet3text);
+                        try
+                        {
+                            udpClient.Send(sendBytes, sendBytes.Length, server.Host, server.Packet3port);
+                        }
+                        catch (Exception err)
+                        {
+                            //Console.WriteLine(e.ToString());
+                            MessageBox.Show(err.Message);
+                        }
+                        break;
+
+                    case 2:
+                        // Send a TCP packet
+
+                        break;
+
+                    default:
+
+                        break;
+
+                }
+            }
+            if (server.Packet4type != 0)
+            {
+
+                switch (server.Packet4type)
+                {
+                    case 1:
+                        Byte[] sendBytes = Encoding.ASCII.GetBytes(server.Packet4text);
+                        try
+                        {
+                            udpClient.Send(sendBytes, sendBytes.Length, server.Host, server.Packet4port);
+                        }
+                        catch (Exception err)
+                        {
+                            //Console.WriteLine(e.ToString());
+                            MessageBox.Show(err.Message);
+                        }
+                        break;
+
+                    case 2:
+                        // Send a TCP packet
+
+                        break;
+
+                    default:
+
+                        break;
+
+                }
+            }
 
         }
 
@@ -123,37 +257,148 @@ namespace KnockMeUp
 
         private void cmbServerList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txtHost.Text = serversList[cmbServerList.SelectedIndex].Host;
-            
-            txtDescription.Text = serversList[cmbServerList.SelectedIndex].Description;
-            
-            cmbPacket1Type.SelectedIndex = serversList[cmbServerList.SelectedIndex].Packet1type;
-            cmbPacket2Type.SelectedIndex = serversList[cmbServerList.SelectedIndex].Packet2type;
-            cmbPacket3Type.SelectedIndex = serversList[cmbServerList.SelectedIndex].Packet3type;
-            cmbPacket4Type.SelectedIndex = serversList[cmbServerList.SelectedIndex].Packet4type;
-            
-            txtPacket1Port.Text = serversList[cmbServerList.SelectedIndex].Packet1port.ToString();
-            txtPacket2Port.Text = serversList[cmbServerList.SelectedIndex].Packet2port.ToString();
-            txtPacket3Port.Text = serversList[cmbServerList.SelectedIndex].Packet3port.ToString();
-            txtPacket4Port.Text = serversList[cmbServerList.SelectedIndex].Packet4port.ToString();
-            
-            txtPacket1Text.Text = serversList[cmbServerList.SelectedIndex].Packet1text.ToString();
-            txtPacket2Text.Text = serversList[cmbServerList.SelectedIndex].Packet2text.ToString();
-            txtPacket3Text.Text = serversList[cmbServerList.SelectedIndex].Packet3text.ToString();
-            txtPacket4Text.Text = serversList[cmbServerList.SelectedIndex].Packet4text.ToString();
+            if (cmbServerList.SelectedIndex != -1)
+            {
+                txtID.Text = serversList[cmbServerList.SelectedIndex].ID;
+                txtHost.Text = serversList[cmbServerList.SelectedIndex].Host;
+                txtDescription.Text = serversList[cmbServerList.SelectedIndex].Description;
 
+                cmbPacket1Type.SelectedIndex = serversList[cmbServerList.SelectedIndex].Packet1type;
+                cmbPacket2Type.SelectedIndex = serversList[cmbServerList.SelectedIndex].Packet2type;
+                cmbPacket3Type.SelectedIndex = serversList[cmbServerList.SelectedIndex].Packet3type;
+                cmbPacket4Type.SelectedIndex = serversList[cmbServerList.SelectedIndex].Packet4type;
+
+                txtPacket1Port.Text = serversList[cmbServerList.SelectedIndex].Packet1port.ToString();
+                txtPacket2Port.Text = serversList[cmbServerList.SelectedIndex].Packet2port.ToString();
+                txtPacket3Port.Text = serversList[cmbServerList.SelectedIndex].Packet3port.ToString();
+                txtPacket4Port.Text = serversList[cmbServerList.SelectedIndex].Packet4port.ToString();
+
+                txtPacket1Text.Text = serversList[cmbServerList.SelectedIndex].Packet1text.ToString();
+                txtPacket2Text.Text = serversList[cmbServerList.SelectedIndex].Packet2text.ToString();
+                txtPacket3Text.Text = serversList[cmbServerList.SelectedIndex].Packet3text.ToString();
+                txtPacket4Text.Text = serversList[cmbServerList.SelectedIndex].Packet4text.ToString();
+
+            }
+            else
+            {
+                // Selected index == -1 so clear the form
+                txtID.Text = Guid.NewGuid().ToString();
+                txtHost.Text = string.Empty;
+                txtDescription.Text = string.Empty;
+
+                cmbPacket1Type.SelectedIndex = 0;
+                cmbPacket2Type.SelectedIndex = 0;
+                cmbPacket3Type.SelectedIndex = 0;
+                cmbPacket4Type.SelectedIndex = 0;
+
+                txtPacket1Port.Text = "0";
+                txtPacket2Port.Text = "0";
+                txtPacket3Port.Text = "0";
+                txtPacket4Port.Text = "0";
+
+                txtPacket1Text.Text = string.Empty;
+                txtPacket2Text.Text = string.Empty;
+                txtPacket3Text.Text = string.Empty;
+                txtPacket4Text.Text = string.Empty;
+
+            }
 
         }
 
-        private void btnAddUpdate_Click(object sender, EventArgs e)
-        {
-            // Update selected server In the file, serversList list, and from cmbServerList
+        private void btnSave_Click(object sender, EventArgs e)
+        {            
+            // Find and update the item in the List
+            var item = serversList.FirstOrDefault(o => o.ID == txtID.Text);
+            if (item != null)
+            {
+                item.ID = txtID.Text;
+                item.Host = txtHost.Text;
+                item.Description = txtDescription.Text;
+                item.Packet1type = cmbPacket1Type.SelectedIndex;
+                item.Packet1port = Convert.ToInt32(txtPacket1Port.Text);
+                item.Packet1text = txtPacket1Text.Text;
+                item.Packet2type = cmbPacket2Type.SelectedIndex;
+                item.Packet2port = Convert.ToInt32(txtPacket2Port.Text);
+                item.Packet2text = txtPacket2Text.Text;
+                item.Packet3type = cmbPacket3Type.SelectedIndex;
+                item.Packet3port = Convert.ToInt32(txtPacket3Port.Text);
+                item.Packet3text = txtPacket3Text.Text;
+                item.Packet4type = cmbPacket4Type.SelectedIndex;
+                item.Packet4port = Convert.ToInt32(txtPacket4Port.Text);
+                item.Packet4text = txtPacket4Text.Text;
+            }
+            else
+            {
+                //Adding new item
+                reload = true;
+                Server server = new Server(
+                    txtID.Text,
+                    txtHost.Text,
+                    txtDescription.Text,
+                    cmbPacket1Type.SelectedIndex,
+                    txtPacket1Port.Text == "" ? Convert.ToInt32(txtPacket1Port.Text) : 0,
+                    txtPacket1Text.Text,
+                    cmbPacket2Type.SelectedIndex,
+                    txtPacket2Port.Text == "" ? Convert.ToInt32(txtPacket2Port.Text) : 0,
+                    txtPacket2Text.Text,
+                    cmbPacket3Type.SelectedIndex,
+                    txtPacket3Port.Text == "" ? Convert.ToInt32(txtPacket3Port.Text) : 0,
+                    txtPacket3Text.Text,
+                    cmbPacket4Type.SelectedIndex,
+                    txtPacket4Port.Text == "" ? Convert.ToInt32(txtPacket4Port.Text) : 0,
+                    txtPacket4Text.Text
+                    );
+               
+                serversList.Add(server);
+
+            }
+
+            // Write new file from data in memory. Could probably just update the single line in the file... but...
+            string _fileName = "servers.json";
+            string jsonString = string.Empty;
+            File.WriteAllText(_fileName, string.Empty);
+
+            foreach (Server server in serversList)
+            {
+                jsonString = JsonSerializer.Serialize(server);
+                File.AppendAllText(_fileName, jsonString+"\r\n");
+                
+            }
+
+            if (reload == true)
+            {
+                reload = false;
+                LoadServerData();
+            }
+            
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            // Delete selected server from file, serversList list, and from cmbServerList
+            var item = serversList.SingleOrDefault(o => o.ID == txtID.Text);
+            if (item != null)
+            {
+                serversList.Remove(item);
+            }
+            // Write new file from data in memory. Could probably just update the single line in the file... but...
+            string _fileName = "servers.json";
+            string jsonString = string.Empty;
+            File.WriteAllText(_fileName, string.Empty);
 
+            foreach (Server server in serversList)
+            {
+                jsonString = JsonSerializer.Serialize(server);
+                File.AppendAllText(_fileName, jsonString + "\r\n");
+
+            }
+
+            LoadServerData();
+
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            cmbServerList.SelectedIndex = -1;
         }
     }
 }
