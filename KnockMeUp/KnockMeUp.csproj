@@ -9,7 +9,17 @@
     <StartupObject></StartupObject>
     <PackageProjectUrl>https://github.com/levonbragg/KnockMeUp</PackageProjectUrl>
     <Description>A simple hacked together port knocking tool</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/levonbragg/KnockMeUp</RepositoryUrl>
+    <Authors>Levon Bragg</Authors>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\levonbragg\RailBaronManager\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="SuperSimpleTcp" Version="2.6.1.1" />
