@@ -7,6 +7,8 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <StartupObject></StartupObject>
+    <PackageProjectUrl>https://github.com/levonbragg/KnockMeUp</PackageProjectUrl>
+    <Description>A simple hacked together port knocking tool</Description>
   </PropertyGroup>
 
   <ItemGroup>
