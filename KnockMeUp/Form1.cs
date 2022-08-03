@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net.Sockets;
 using System.Text.Json;
+using SuperSimpleTcp;
 
 namespace KnockMeUp
 {    
@@ -154,7 +155,28 @@ namespace KnockMeUp
                     
                     case 2:
                         // Send a TCP packet
-                        
+                        // instantiate
+                        SimpleTcpClient client = new SimpleTcpClient(txtHost.Text+":"+txtPacket1Port.Text);
+
+                        // set events
+                        //client.Events.Connected += Connected;
+                        //client.Events.Disconnected += Disconnected;
+                        //client.Events.DataReceived += DataReceived;
+
+                        // let's go!
+                        try
+                        {
+                            //client.Connect();
+                            client.ConnectWithRetries(10);
+                        }
+                        catch(System.Net.Sockets.SocketException ex)
+                        {
+
+                        }
+                        catch(System.TimeoutException ex1)
+                        {
+
+                        }
                         break;
                                         
                     default:
@@ -183,6 +205,28 @@ namespace KnockMeUp
 
                     case 2:
                         // Send a TCP packet
+                        // instantiate
+                        SimpleTcpClient client = new SimpleTcpClient(txtHost.Text + ":" + txtPacket2Port.Text);
+
+                        // set events
+                        //client.Events.Connected += Connected;
+                        //client.Events.Disconnected += Disconnected;
+                        //client.Events.DataReceived += DataReceived;
+
+                        // let's go!
+                        try
+                        {
+                            //client.Connect();
+                            client.ConnectWithRetries(20);
+                        }
+                        catch (System.Net.Sockets.SocketException ex)
+                        {
+
+                        }
+                        catch (System.TimeoutException ex1)
+                        {
+
+                        }
 
                         break;
 
@@ -212,6 +256,28 @@ namespace KnockMeUp
 
                     case 2:
                         // Send a TCP packet
+                        // instantiate
+                        SimpleTcpClient client = new SimpleTcpClient(txtHost.Text + ":" + txtPacket3Port.Text);
+
+                        // set events
+                        //client.Events.Connected += Connected;
+                        //client.Events.Disconnected += Disconnected;
+                        //client.Events.DataReceived += DataReceived;
+
+                        // let's go!
+                        try
+                        {
+                            //client.Connect();
+                            client.ConnectWithRetries(20);
+                        }
+                        catch (System.Net.Sockets.SocketException ex)
+                        {
+
+                        }
+                        catch (System.TimeoutException ex1)
+                        {
+
+                        }
 
                         break;
 
@@ -241,6 +307,28 @@ namespace KnockMeUp
 
                     case 2:
                         // Send a TCP packet
+                        // instantiate
+                        SimpleTcpClient client = new SimpleTcpClient(txtHost.Text + ":" + txtPacket4Port.Text);
+
+                        // set events
+                        //client.Events.Connected += Connected;
+                        //client.Events.Disconnected += Disconnected;
+                        //client.Events.DataReceived += DataReceived;
+
+                        // let's go!
+                        try
+                        {
+                            //client.Connect();
+                            client.ConnectWithRetries(20);
+                        }
+                        catch (System.Net.Sockets.SocketException ex)
+                        {
+
+                        }
+                        catch (System.TimeoutException ex1)
+                        {
+
+                        }
 
                         break;
 
@@ -431,6 +519,21 @@ namespace KnockMeUp
         private void btnAdd_Click(object sender, EventArgs e)
         {
             cmbServerList.SelectedIndex = -1;
+        }
+
+        static void Connected(object sender, ConnectionEventArgs e)
+        {
+            //Console.WriteLine($"*** Server {e.IpPort} connected");
+        }
+
+        static void Disconnected(object sender, ConnectionEventArgs e)
+        {
+            //Console.WriteLine($"*** Server {e.IpPort} disconnected");
+        }
+
+        static void DataReceived(object sender, DataReceivedEventArgs e)
+        {
+            //Console.WriteLine($"[{e.IpPort}] {Encoding.UTF8.GetString(e.Data)}");
         }
     }
 }
