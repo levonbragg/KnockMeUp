@@ -343,29 +343,7 @@ namespace KnockMeUp
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //var server = new Server
-            //{
-            //    ID = Guid.NewGuid().ToString(),
-            //    Host = "172.31.251.254",
-            //    Description = "Home F12",
-            //    Packet1type = 1,
-            //    Packet1port = 38617,
-            //    Packet1text = "Gd57xb1zNlQvedtUuP14qa3eWka618TjLhVvvTCW==",
-            //    Packet2type = 1,
-            //    Packet2port = 10994,
-            //    Packet2text = "Gd57xb1zNlQvedtUuP14qa3eWka618TjLhVvvTCW==",
-            //    Packet3type = 1,
-            //    Packet3port = 53571,
-            //    Packet3text = "Gd57xb1zNlQvedtUuP14qa3eWka618TjLhVvvTCW==",
-            //    Packet4type = 1,
-            //    Packet4port = 27589,
-            //    Packet4text = "Gd57xb1zNlQvedtUuP14qa3eWka618TjLhVvvTCW==",
-            //};
-
-            //string _fileName = "servers.json";
-            //string jsonString = JsonSerializer.Serialize(server);
-            //File.AppendAllText(_fileName, jsonString);
-            
+                        
         }
 
         private void cmbServerList_SelectedIndexChanged(object sender, EventArgs e)
