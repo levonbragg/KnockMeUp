@@ -11,3 +11,7 @@ With TCP, because we are not making a connection, (The server should be dropping
 It will just knock on the TCP port.
 
 Because you can set  the type for each packet you can mix and match for your port knocking pleasure.
+
+![image](https://user-images.githubusercontent.com/9368955/182544064-62ca74e7-acf7-42d3-8604-fa082ebdc9fb.png)
+
+Saves servers in a servers.json file. 1 object per line.
