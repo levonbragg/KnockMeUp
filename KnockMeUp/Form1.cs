@@ -31,7 +31,7 @@ namespace KnockMeUp
         private void LoadServerData()
         {
             cmbServerList.Items.Clear();
-            cmbServerList.Text = "Select Server...";
+            cmbServerList.Text = "Add a Server...";
             serversList.Clear();
 
             // Load JSON data from file if there is one...
@@ -50,17 +50,42 @@ namespace KnockMeUp
                 {
                     cmbServerList.Items.Add(server.Description);
                 }
+                
             }
-            catch
+            catch (FileNotFoundException err)
             {
-
+                // File does not exist, so lets create one...
+                File.WriteAllText(_fileName, string.Empty);
             }
+                       
+            if (cmbServerList.Items.Count > 0)
+            {                
+                cmbServerList.SelectedIndex = 0;
+            }
+            else
+            {
+                // No servers saved yet, so...
+                // Setup form for a new record.
+                txtID.Text = Guid.NewGuid().ToString();
+                txtHost.Text = string.Empty;
+                txtDescription.Text = string.Empty;
 
-            // set display to first server.
-            cmbServerList.SelectedIndex = 0;
+                cmbPacket1Type.SelectedIndex = 0;
+                cmbPacket2Type.SelectedIndex = 0;
+                cmbPacket3Type.SelectedIndex = 0;
+                cmbPacket4Type.SelectedIndex = 0;
 
-            // File does not exist, so lets create one...
-            //File.WriteAllText(_fileName, string.Empty);
+                txtPacket1Port.Text = "0";
+                txtPacket2Port.Text = "0";
+                txtPacket3Port.Text = "0";
+                txtPacket4Port.Text = "0";
+
+                txtPacket1Text.Text = string.Empty;
+                txtPacket2Text.Text = string.Empty;
+                txtPacket3Text.Text = string.Empty;
+                txtPacket4Text.Text = string.Empty;
+            }
+            
         }
 
         private void btnKnock_Click(object sender, EventArgs e)
@@ -311,21 +336,28 @@ namespace KnockMeUp
             var item = serversList.FirstOrDefault(o => o.ID == txtID.Text);
             if (item != null)
             {
-                item.ID = txtID.Text;
-                item.Host = txtHost.Text;
-                item.Description = txtDescription.Text;
-                item.Packet1type = cmbPacket1Type.SelectedIndex;
-                item.Packet1port = Convert.ToInt32(txtPacket1Port.Text);
-                item.Packet1text = txtPacket1Text.Text;
-                item.Packet2type = cmbPacket2Type.SelectedIndex;
-                item.Packet2port = Convert.ToInt32(txtPacket2Port.Text);
-                item.Packet2text = txtPacket2Text.Text;
-                item.Packet3type = cmbPacket3Type.SelectedIndex;
-                item.Packet3port = Convert.ToInt32(txtPacket3Port.Text);
-                item.Packet3text = txtPacket3Text.Text;
-                item.Packet4type = cmbPacket4Type.SelectedIndex;
-                item.Packet4port = Convert.ToInt32(txtPacket4Port.Text);
-                item.Packet4text = txtPacket4Text.Text;
+                try
+                {
+                    item.ID = txtID.Text;
+                    item.Host = txtHost.Text;
+                    item.Description = txtDescription.Text;
+                    item.Packet1type = cmbPacket1Type.SelectedIndex;
+                    item.Packet1port = Convert.ToInt32(txtPacket1Port.Text);
+                    item.Packet1text = txtPacket1Text.Text;
+                    item.Packet2type = cmbPacket2Type.SelectedIndex;
+                    item.Packet2port = Convert.ToInt32(txtPacket2Port.Text);
+                    item.Packet2text = txtPacket2Text.Text;
+                    item.Packet3type = cmbPacket3Type.SelectedIndex;
+                    item.Packet3port = Convert.ToInt32(txtPacket3Port.Text);
+                    item.Packet3text = txtPacket3Text.Text;
+                    item.Packet4type = cmbPacket4Type.SelectedIndex;
+                    item.Packet4port = Convert.ToInt32(txtPacket4Port.Text);
+                    item.Packet4text = txtPacket4Text.Text;
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
             else
             {
@@ -336,16 +368,16 @@ namespace KnockMeUp
                     txtHost.Text,
                     txtDescription.Text,
                     cmbPacket1Type.SelectedIndex,
-                    txtPacket1Port.Text == "" ? Convert.ToInt32(txtPacket1Port.Text) : 0,
+                    txtPacket1Port.Text == "" ? 0 : Convert.ToInt32(txtPacket1Port.Text),
                     txtPacket1Text.Text,
                     cmbPacket2Type.SelectedIndex,
-                    txtPacket2Port.Text == "" ? Convert.ToInt32(txtPacket2Port.Text) : 0,
+                    txtPacket2Port.Text == "" ? 0 : Convert.ToInt32(txtPacket2Port.Text),
                     txtPacket2Text.Text,
                     cmbPacket3Type.SelectedIndex,
-                    txtPacket3Port.Text == "" ? Convert.ToInt32(txtPacket3Port.Text) : 0,
+                    txtPacket3Port.Text == "" ? 0 : Convert.ToInt32(txtPacket3Port.Text),
                     txtPacket3Text.Text,
                     cmbPacket4Type.SelectedIndex,
-                    txtPacket4Port.Text == "" ? Convert.ToInt32(txtPacket4Port.Text) : 0,
+                    txtPacket4Port.Text == "" ? 0 : Convert.ToInt32(txtPacket4Port.Text),
                     txtPacket4Text.Text
                     );
                
