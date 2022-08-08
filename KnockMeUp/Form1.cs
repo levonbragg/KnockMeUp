@@ -7,16 +7,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Timers;
 using System.Net.Sockets;
 using System.Text.Json;
 using SuperSimpleTcp;
+using System.Threading;
+
 
 namespace KnockMeUp
 {    
     public partial class Form1 : Form
     {
+        private static System.Timers.Timer keepAliveTimer;
         List<Server> serversList = new List<Server>();
         bool reload = false;
+        int KeepAliveSentCounter=0;
+        Server KeepAliveServer;
+        delegate void SetTextCallback(string text);
 
 
         public Form1()
@@ -26,6 +33,7 @@ namespace KnockMeUp
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            lblKeepAlivesSent.Text="";
             LoadServerData();
         }
 
@@ -110,9 +118,19 @@ namespace KnockMeUp
                     serversList[cmbServerList.SelectedIndex].Packet4port,
                     serversList[cmbServerList.SelectedIndex].Packet4text
                     );
+
                 
                 if (server != null)
                 {
+                    if (chkKeepAlive.Checked)
+                    {
+                        KeepAliveServer = server;
+                        keepAliveTimer = new System.Timers.Timer((Convert.ToDouble(txtSeconds.Text))*1000);
+                        lblKeepAlivesSent.Text = string.Empty;
+                        KeepAliveSentCounter=0;
+                        keepAliveTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+                        keepAliveTimer.Start();
+                    }
                     knock(server);
                 }
             }
@@ -125,8 +143,37 @@ namespace KnockMeUp
 
         }
 
+        private void OnTimedEvent(object? sender, ElapsedEventArgs e)
+        {
+            if (KeepAliveServer != null && chkKeepAlive.Checked)
+            {
+                knock(KeepAliveServer);
+                KeepAliveSentCounter++;
+                string kas = KeepAliveSentCounter.ToString();
+                if (lblKeepAlivesSent.InvokeRequired)
+                {
+                    SetTextCallback d = new SetTextCallback(SetText);
+                    this.Invoke(d, new object[] { kas });
+                    
+                }
+
+            }
+            else
+            {
+                keepAliveTimer.Stop();
+            }
+        }
+
+        private void SetText(string text)
+        {
+            this.lblKeepAlivesSent.Text=text;
+        }
+
+
         private void knock(Server server)
         {
+            int milliseconds = 100;
+            
             if (server is null)
             {
                 throw new ArgumentNullException(nameof(server));
@@ -145,6 +192,11 @@ namespace KnockMeUp
                         try
                         {
                             udpClient.Send(sendBytes, sendBytes.Length, server.Host, server.Packet1port);
+                            Thread.Sleep(milliseconds);
+                            if (chkDuplicate.Checked)
+                            {
+                                udpClient.Send(sendBytes, sendBytes.Length, server.Host, server.Packet1port);
+                            }
                         }
                         catch (Exception err)
                         {
@@ -157,6 +209,7 @@ namespace KnockMeUp
                         // Send a TCP packet
                         // instantiate
                         SimpleTcpClient client = new SimpleTcpClient(txtHost.Text+":"+txtPacket1Port.Text);
+
 
                         // set events
                         //client.Events.Connected += Connected;
@@ -195,6 +248,11 @@ namespace KnockMeUp
                         try
                         {
                             udpClient.Send(sendBytes, sendBytes.Length, server.Host, server.Packet2port);
+                            Thread.Sleep(milliseconds);
+                            if (chkDuplicate.Checked)
+                            {
+                                udpClient.Send(sendBytes, sendBytes.Length, server.Host, server.Packet2port);
+                            }
                         }
                         catch (Exception err)
                         {
@@ -246,6 +304,11 @@ namespace KnockMeUp
                         try
                         {
                             udpClient.Send(sendBytes, sendBytes.Length, server.Host, server.Packet3port);
+                            Thread.Sleep(milliseconds);
+                            if (chkDuplicate.Checked)
+                            {
+                                udpClient.Send(sendBytes, sendBytes.Length, server.Host, server.Packet3port);
+                            }
                         }
                         catch (Exception err)
                         {
@@ -297,6 +360,12 @@ namespace KnockMeUp
                         try
                         {
                             udpClient.Send(sendBytes, sendBytes.Length, server.Host, server.Packet4port);
+                            Thread.Sleep(milliseconds);
+                            if (chkDuplicate.Checked)
+                            {
+                                udpClient.Send(sendBytes, sendBytes.Length, server.Host, server.Packet4port);
+                            }
+
                         }
                         catch (Exception err)
                         {
@@ -512,6 +581,11 @@ namespace KnockMeUp
         static void DataReceived(object sender, DataReceivedEventArgs e)
         {
             //Console.WriteLine($"[{e.IpPort}] {Encoding.UTF8.GetString(e.Data)}");
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            keepAliveTimer.Stop();
         }
     }
 }

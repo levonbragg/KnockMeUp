@@ -58,6 +58,12 @@
             this.btnDelete = new System.Windows.Forms.Button();
             this.txtID = new System.Windows.Forms.TextBox();
             this.btnAdd = new System.Windows.Forms.Button();
+            this.chkDuplicate = new System.Windows.Forms.CheckBox();
+            this.chkKeepAlive = new System.Windows.Forms.CheckBox();
+            this.txtSeconds = new System.Windows.Forms.TextBox();
+            this.lblSeconds = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.lblKeepAlivesSent = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // cmbServerList
@@ -325,11 +331,72 @@
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
+            // chkDuplicate
+            // 
+            this.chkDuplicate.AutoSize = true;
+            this.chkDuplicate.Location = new System.Drawing.Point(379, 280);
+            this.chkDuplicate.Name = "chkDuplicate";
+            this.chkDuplicate.Size = new System.Drawing.Size(119, 19);
+            this.chkDuplicate.TabIndex = 30;
+            this.chkDuplicate.Text = "Duplicate Packets";
+            this.chkDuplicate.UseVisualStyleBackColor = true;
+            // 
+            // chkKeepAlive
+            // 
+            this.chkKeepAlive.AutoSize = true;
+            this.chkKeepAlive.Location = new System.Drawing.Point(11, 279);
+            this.chkKeepAlive.Name = "chkKeepAlive";
+            this.chkKeepAlive.Size = new System.Drawing.Size(81, 19);
+            this.chkKeepAlive.TabIndex = 31;
+            this.chkKeepAlive.Text = "Keep Alive";
+            this.chkKeepAlive.UseVisualStyleBackColor = true;
+            // 
+            // txtSeconds
+            // 
+            this.txtSeconds.Location = new System.Drawing.Point(158, 275);
+            this.txtSeconds.Name = "txtSeconds";
+            this.txtSeconds.Size = new System.Drawing.Size(50, 23);
+            this.txtSeconds.TabIndex = 32;
+            this.txtSeconds.Text = "180";
+            // 
+            // lblSeconds
+            // 
+            this.lblSeconds.AutoSize = true;
+            this.lblSeconds.Location = new System.Drawing.Point(98, 280);
+            this.lblSeconds.Name = "lblSeconds";
+            this.lblSeconds.Size = new System.Drawing.Size(54, 15);
+            this.lblSeconds.TabIndex = 33;
+            this.lblSeconds.Text = "Seconds:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(214, 280);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(96, 15);
+            this.label8.TabIndex = 34;
+            this.label8.Text = "Keep Alives Sent:";
+            // 
+            // lblKeepAlivesSent
+            // 
+            this.lblKeepAlivesSent.AutoSize = true;
+            this.lblKeepAlivesSent.Location = new System.Drawing.Point(316, 280);
+            this.lblKeepAlivesSent.Name = "lblKeepAlivesSent";
+            this.lblKeepAlivesSent.Size = new System.Drawing.Size(25, 15);
+            this.lblKeepAlivesSent.TabIndex = 35;
+            this.lblKeepAlivesSent.Text = "999";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(532, 289);
+            this.ClientSize = new System.Drawing.Size(532, 310);
+            this.Controls.Add(this.lblKeepAlivesSent);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.lblSeconds);
+            this.Controls.Add(this.txtSeconds);
+            this.Controls.Add(this.chkKeepAlive);
+            this.Controls.Add(this.chkDuplicate);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.txtID);
             this.Controls.Add(this.btnDelete);
@@ -362,6 +429,7 @@
             this.Controls.Add(this.cmbServerList);
             this.Name = "Form1";
             this.Text = "Main";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -400,5 +468,11 @@
         private Button btnDelete;
         private TextBox txtID;
         private Button btnAdd;
+        private CheckBox chkDuplicate;
+        private CheckBox chkKeepAlive;
+        private TextBox txtSeconds;
+        private Label lblSeconds;
+        private Label label8;
+        private Label lblKeepAlivesSent;
     }
 }
