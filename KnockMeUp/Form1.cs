@@ -585,7 +585,11 @@ namespace KnockMeUp
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            keepAliveTimer.Stop();
+            if (keepAliveTimer.Enabled)
+            {
+                keepAliveTimer.Stop();
+            }
+            
         }
     }
 }
