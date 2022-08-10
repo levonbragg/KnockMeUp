@@ -178,8 +178,7 @@ namespace KnockMeUp
             {
                 throw new ArgumentNullException(nameof(server));
             }
-
-            // send UDP test
+                        
             UdpClient udpClient = new UdpClient();
 
             if(server.Packet1type !=0)
@@ -199,8 +198,7 @@ namespace KnockMeUp
                             }
                         }
                         catch (Exception err)
-                        {
-                            //Console.WriteLine(e.ToString());
+                        {                            
                             MessageBox.Show(err.Message);
                         }
                         break;
